@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node *left;
+    struct Node *right;
+} Node;
+
+Node *createNode(int data) {
+    Node *new_node = (Node *)malloc(sizeof(Node));
+    if (new_node == NULL) {
+        printf("Error: Falló la asignación de memoria del nodo de árbol.\n");
+        exit(EXIT_FAILURE);
+    }
+    new_node->data = data;
+    new_node->left = NULL;
+    new_node->right = NULL;
+    return new_node;
+}
+
+void PreOrder(Node *node) {
+    if (node == NULL) {
+        return;
+    }
+
+    printf("%d ", node->data); 
+    PreOrder(node->left);      
+    PreOrder(node->right);     
+}
+
+void InOrder(Node *node) {
+    if (node == NULL) {
+        return;
+    }
+
+    InOrder(node->left);      
+    printf("%d ", node->data); 
+    InOrder(node->right);     
+}
+
+
+void PostOrder(Node *node) {
+    if (node == NULL) {
+        return;
+    }
+
+    PostOrder(node->left);    
+    PostOrder(node->right);    
+    printf("%d ", node->data); 
+}
+
+int main() {
+    // Crear el arbol con los 5 nodos
+    Node *root = createNode(10);
+    root->left = createNode(5);
+    root->right = createNode(15);
+    root->left->left = createNode(3);
+    root->left->right = createNode(7);
+    root->right->right = createNode(20); 
+
+    printf("--- Recorrido de Árbol Binario (Recursivo) ---\n");
+    printf("Nodos del Árbol (Raíz=10, Izquierda=5, Derecha=15, Hijos de 5: 3, 7, Hijo derecho de 15: 20)\n\n");
+
+    printf("Recorrido Pre-orden: ");
+    PreOrder(root);
+    printf("\n");
+
+    printf("Recorrido In-orden: ");
+    InOrder(root);
+    printf("\n");
+
+    printf("Recorrido Post-orden: ");
+    PostOrder(root);
+    printf("\n");
+
+    return 0;
+}
